@@ -24,7 +24,7 @@ class ResourceComparerTest {
 
     @After
     fun teardown() {
-        
+
     }
 
     @Test
