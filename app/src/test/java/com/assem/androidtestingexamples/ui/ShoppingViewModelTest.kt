@@ -74,7 +74,15 @@ class ShoppingViewModelTest {
     }
 
     @Test
-    fun `insert item with valid input, returns error`() {
+    fun `insert item with no input, returns error`() {
+        viewmodel.insertShoppingItem("", "", "")
+        val value = viewmodel.insertShoppingItemStatus.getOrAwaitValueTest()
+        assertThat(value.getContentIfNotHandled()?.status).isEqualTo(Status.ERROR)
+    }
+
+
+    @Test
+    fun `insert item with valid input, returns success`() {
         viewmodel.insertShoppingItem("name", "1", "5.0")
         val value = viewmodel.insertShoppingItemStatus.getOrAwaitValueTest()
         assertThat(value.getContentIfNotHandled()?.status).isEqualTo(Status.SUCCESS)
