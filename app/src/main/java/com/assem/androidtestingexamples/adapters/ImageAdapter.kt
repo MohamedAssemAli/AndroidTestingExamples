@@ -1,20 +1,19 @@
 package com.assem.androidtestingexamples.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.assem.androidtestingexamples.R
+import com.assem.androidtestingexamples.databinding.ItemImageBinding
 import com.bumptech.glide.RequestManager
-import kotlinx.android.synthetic.main.item_image.view.*
 import javax.inject.Inject
 
 class ImageAdapter @Inject constructor(
     private val glide: RequestManager
 ) : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
-    class ImageViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+
+    class ImageViewHolder(val binding: ItemImageBinding) : RecyclerView.ViewHolder(binding.root)
 
     private val diffCallback = object : DiffUtil.ItemCallback<String>() {
         override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
@@ -33,13 +32,12 @@ class ImageAdapter @Inject constructor(
         set(value) = differ.submitList(value)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
-        return ImageViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.item_image,
-                parent,
-                false
-            )
+        val binding = ItemImageBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
         )
+        return ImageViewHolder(binding)
     }
 
     private var onItemClickListener: ((String) -> Unit)? = null
@@ -51,7 +49,7 @@ class ImageAdapter @Inject constructor(
     override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
         val url = images[position]
         holder.itemView.apply {
-            glide.load(url).into(ivShoppingImage)
+            glide.load(url).into(holder.binding.ivShoppingImage)
 
             setOnClickListener {
                 onItemClickListener?.let { click ->

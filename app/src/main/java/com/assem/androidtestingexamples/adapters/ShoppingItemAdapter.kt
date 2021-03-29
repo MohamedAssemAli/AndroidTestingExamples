@@ -8,15 +8,18 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.assem.androidtestingexamples.R
 import com.assem.androidtestingexamples.data.local.ShoppingItem
+import com.assem.androidtestingexamples.databinding.ItemImageBinding
+import com.assem.androidtestingexamples.databinding.ItemShoppingBinding
 import com.bumptech.glide.RequestManager
-import kotlinx.android.synthetic.main.item_shopping.view.*
 import javax.inject.Inject
 
 class ShoppingItemAdapter @Inject constructor(
     private val glide: RequestManager
 ) : RecyclerView.Adapter<ShoppingItemAdapter.ShoppingItemViewHolder>() {
 
-    class ShoppingItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+
+    class ShoppingItemViewHolder(val binding: ItemShoppingBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     private val diffCallback = object : DiffUtil.ItemCallback<ShoppingItem>() {
         override fun areItemsTheSame(oldItem: ShoppingItem, newItem: ShoppingItem): Boolean {
@@ -35,13 +38,12 @@ class ShoppingItemAdapter @Inject constructor(
         set(value) = differ.submitList(value)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShoppingItemViewHolder {
-        return ShoppingItemViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.item_shopping,
-                parent,
-                false
-            )
+        val binding = ItemShoppingBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
         )
+        return ShoppingItemViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
@@ -51,13 +53,13 @@ class ShoppingItemAdapter @Inject constructor(
     override fun onBindViewHolder(holder: ShoppingItemViewHolder, position: Int) {
         val shoppingItem = shoppingItems[position]
         holder.itemView.apply {
-            glide.load(shoppingItem.imageUrl).into(ivShoppingImage)
+            glide.load(shoppingItem.imageUrl).into(holder.binding.ivShoppingImage)
 
-            tvName.text = shoppingItem.name
+            holder.binding.tvName.text = shoppingItem.name
             val amountText = "${shoppingItem.amount}x"
-            tvShoppingItemAmount.text = amountText
+            holder.binding.tvShoppingItemAmount.text = amountText
             val priceText = "${shoppingItem.price}€"
-            tvShoppingItemPrice.text = priceText
+            holder.binding.tvShoppingItemPrice.text = priceText
         }
     }
 }

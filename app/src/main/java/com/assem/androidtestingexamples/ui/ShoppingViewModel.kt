@@ -11,10 +11,13 @@ import com.assem.androidtestingexamples.other.Constants
 import com.assem.androidtestingexamples.other.Event
 import com.assem.androidtestingexamples.other.Resource
 import com.assem.androidtestingexamples.repositories.ShoppingRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.Exception
 
-class ShoppingViewModel @ViewModelInject constructor(
+@HiltViewModel
+class ShoppingViewModel @Inject constructor(
     private val repository: ShoppingRepository
 ) : ViewModel() {
 
