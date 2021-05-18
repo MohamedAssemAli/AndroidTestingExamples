@@ -23,10 +23,11 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ShoppingFragment @Inject constructor(
     val shoppingItemAdapter: ShoppingItemAdapter,
-    var viewModel: ShoppingViewModel? = null
+//    var viewModel: ShoppingViewModel? = null
 ) : Fragment(R.layout.fragment_shopping) {
 
     private var _binding: FragmentShoppingBinding? = null
+    private var viewModel: ShoppingViewModel? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.

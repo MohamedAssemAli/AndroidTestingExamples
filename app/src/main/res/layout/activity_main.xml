@@ -15,5 +15,4 @@
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph"
         tools:layout="@layout/fragment_add_shopping_item" />
-
 </FrameLayout>

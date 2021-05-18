@@ -9,6 +9,8 @@ import com.assem.androidtestingexamples.data.local.ShoppingDao
 import com.assem.androidtestingexamples.data.local.ShoppingItem
 import com.assem.androidtestingexamples.data.local.ShoppingItemDatabase
 import com.assem.androidtestingexamples.getOrAwaitValue
+import com.assem.androidtestingexamples.launchFragmentInHiltContainer
+import com.assem.androidtestingexamples.ui.ShoppingFragment
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -50,6 +52,12 @@ class ShoppingDaoTest {
     fun setup() {
         hiltRule.inject()
         dao = database.shoppingDao()
+    }
+
+    @Test
+    fun testLaunchFragmentInHiltContainer() {
+        launchFragmentInHiltContainer<ShoppingFragment> {
+        }
     }
 
     @Test
